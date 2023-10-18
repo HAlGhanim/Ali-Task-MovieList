@@ -1,5 +1,13 @@
 const express = require("express");
-const { signup, signin, fetchUser } = require("./controllers");
+const {
+  signup,
+  signin,
+  fetchUser,
+  MarkAsWatched,
+  searchMoviesInList,
+  getWatchedMovies,
+  getCountOfMoviesInList,
+} = require("./controllers");
 const {
   imageConditional,
 } = require("../../middlewares/Images/imageConditional");
@@ -19,17 +27,32 @@ router.param("userId", async (req, res, next, userId) => {
   }
 });
 
-router.post(
-  "/signup",
-  upload.single("image"),
-  imageConditional,
-  hashing,
-  signup
-);
+router.post("/signup", upload.single("image"), hashing, signup);
 router.post(
   "/signin",
   passport.authenticate("local", { session: false }),
   signin
+);
+
+router.put(
+  "/:userId/movies/:movieId/watched",
+  passport.authenticate("jwt", { session: false }),
+  MarkAsWatched
+);
+router.get(
+  "/:userId/movies/search",
+  passport.authenticate("jwt", { session: false }),
+  searchMoviesInList
+);
+router.get(
+  "/:userId/movies/watched",
+  passport.authenticate("jwt", { session: false }),
+  getWatchedMovies
+);
+router.get(
+  "/:userId/movies/count",
+  passport.authenticate("jwt", { session: false }),
+  getCountOfMoviesInList
 );
 
 module.exports = router;
