@@ -38,7 +38,6 @@ exports.MarkAsWatched = async (req, res, next) => {
       item.movie.equals(movieId)
     );
     user.watchlist[movieIndex].watched = !user.watchlist[movieIndex].watched;
-    await user.save();
     return res.status(200).json(user.watchlist);
   } catch (error) {
     return next(error);

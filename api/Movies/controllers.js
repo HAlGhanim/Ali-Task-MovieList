@@ -53,7 +53,6 @@ exports.addMovieToWatchlist = async (req, res, next) => {
       return res.status(400).json({ message: "Movie already in watchlist" });
     }
     user.watchlist.push({ movie: movieId, watched: false });
-    await user.save();
     return res.status(201).json(user.watchlist);
   } catch (error) {
     return next(error);
