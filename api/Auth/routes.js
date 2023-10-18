@@ -1,12 +1,5 @@
 const express = require("express");
-const {
-  getUsers,
-  signup,
-  signin,
-  updateUser,
-  deleteUser,
-  fetchUser,
-} = require("./controllers");
+const { signup, signin, fetchUser } = require("./controllers");
 const {
   imageConditional,
 } = require("../../middlewares/Images/imageConditional");
@@ -26,7 +19,6 @@ router.param("userId", async (req, res, next, userId) => {
   }
 });
 
-router.get("/", getUsers);
 router.post(
   "/signup",
   upload.single("image"),
@@ -38,17 +30,6 @@ router.post(
   "/signin",
   passport.authenticate("local", { session: false }),
   signin
-);
-router.put(
-  "/:userId",
-  passport.authenticate("jwt", { session: false }),
-  hashing,
-  updateUser
-);
-router.delete(
-  "/:userId",
-  passport.authenticate("jwt", { session: false }),
-  deleteUser
 );
 
 module.exports = router;

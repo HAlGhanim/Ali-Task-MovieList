@@ -19,8 +19,8 @@ exports.getMovies = async (req, res, next) => {
 };
 exports.deleteMovie = async (req, res, next) => {
   try {
-    const { MovieId } = req.params;
-    await Movie.deleteOne(MovieId);
+    const { movieId } = req.params;
+    await Movie.deleteOne(movieId);
     return res.status(204).end();
   } catch (error) {
     return next(error);
